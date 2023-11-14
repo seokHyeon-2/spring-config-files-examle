@@ -6,14 +6,16 @@ management:
   endpoint:
     health:
       enabled: true
-      show-details: always
+      show-details: 'always'
     beans:
       enabled: true
     info:
       enabled: true
+    shutdown:
+      enabled: true
   server:
     address: 'localhost'
-    port: 11001
+    port: 12001
 
 spring:
   jpa:
@@ -24,46 +26,37 @@ spring:
         physical-strategy: 'org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl'
     properties:
       hibernate:
+        default_batch_fetch_size: 100
         format_sql: true
         use_sql_comments: true
     show-sql: true
     open-in-view: false
-  thymeleaf:
-    cache: false
-    prefix: 'classpath:/templates/'
-    check-template-location: true
-    suffix: .html
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    username: 'poly'
     password: '1234'
+    username: 'asdf'
     url: 'jdbc:mariadb://localhost:3306/myDB'
   application:
-    name: NOTICE-SERVICE
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+    name: 'NOTICE-SERVICE'
+  boot:
+    admin:
+      client: # Spring Boot Actuator Admin UI Server
+        url: 'http://localhost:15000'
 
 jwt:
   token:
-    creator: 'poly'
-    refresh:
-      valid:
-        time: 3000
-      name: jwtRefreshToken
     access:
-      valid:
-        time: 300
       name: jwtAccessToken
-  secret:
-    key: '2132123132313213321'
 
 eureka:
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      default-zone: 'http://localhost:8761/eureka'
+      defaultZone: 'http://localhost:8761/eureka'
 
 server:
-  port: '12000'
+  port: 12000
+
+api:
+  gateway: 'localhost:11000'
